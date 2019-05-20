@@ -18,20 +18,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="Vlx-GM-Gkb">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="Vlx-GM-Gkb">
                                 <rect key="frame" x="20" y="44" width="374" height="818"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="xUf-bt-Dic">
-                                <rect key="frame" x="20" y="44" width="374" height="818"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="xUf-bt-Dic">
+                                <rect key="frame" x="20" y="161" width="374" height="430"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Fth-HV-7gJ">
-                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="itemSize" width="100" height="100"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Bic-GR-1uO">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CardCell" id="Bic-GR-1uO" customClass="CardCollectionViewCell" customModule="Memorize" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -57,23 +58,20 @@
                                             <constraint firstAttribute="trailing" secondItem="fTe-Z3-hZV" secondAttribute="trailing" id="n4B-1r-ekF"/>
                                         </constraints>
                                         <size key="customSize" width="100" height="100"/>
+                                        <connections>
+                                            <outlet property="backImageView" destination="XdF-KS-CNm" id="AJ0-xT-s8u"/>
+                                            <outlet property="frontImageView" destination="fTe-Z3-hZV" id="Cnb-se-ybc"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="xUf-bt-Dic" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="9Yn-X9-lKe"/>
-                            <constraint firstItem="Vlx-GM-Gkb" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="Fz0-qU-DJy"/>
-                            <constraint firstItem="Vlx-GM-Gkb" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="JWs-OE-ZiP"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Vlx-GM-Gkb" secondAttribute="trailing" id="aKl-CZ-4dN"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="Vlx-GM-Gkb" secondAttribute="bottom" id="bKR-4y-OTK"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="xUf-bt-Dic" secondAttribute="bottom" id="fHt-QV-Psm"/>
-                            <constraint firstItem="xUf-bt-Dic" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="nsv-7G-1th"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="xUf-bt-Dic" secondAttribute="trailing" id="xw3-NR-W7s"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="collectionView" destination="xUf-bt-Dic" id="weF-sg-RNF"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

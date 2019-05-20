@@ -17,7 +17,7 @@ class CardModel  {
         // Membuat nomor random
           let randomNumber = arc4random_uniform(6) + 1
         
-        print(randomNumber)
+        print("generating a random \(randomNumber)")
             
         let cardOne = Card()
         cardOne.imageName = "card\(randomNumber)"
@@ -28,6 +28,8 @@ class CardModel  {
         
         generatedCardsArray.append(cardTwo)
         }
+        
+        print(generatedCardsArray.count)
         // Return Array
         return generatedCardsArray
     }
