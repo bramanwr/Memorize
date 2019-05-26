@@ -10,6 +10,8 @@ import UIKit
 // Dekralarasi dulu
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
+    @IBOutlet weak var timerLabel: UILabel!
+    
     @IBOutlet weak var collectionView: UICollectionView!
     
     var model = CardModel()
@@ -17,17 +19,49 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     var firstFlippedCardIndex:IndexPath?
     
+    var timer:Timer?
+    var milliseconds:Float = 10 * 1000 // 10 Seconds
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         collectionView.delegate = self
         collectionView.dataSource = self
         
+        // Create timer
+        timer = Timer.scheduledTimer(timeInterval: 0.001, target: self, selector: #selector(timerElapsed), userInfo: nil, repeats: true)
+        RunLoop.main.add(timer!, forMode: .common)
+        
         cardArray = model.getCards()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    // Timer methods
+    
+    @objc func timerElapsed() {
+        
+        milliseconds -= 1
+        
+        //Convert to seconds
+        let seconds = String(format: "%.2f", milliseconds/1000)
+        
+        //Set Label
+        timerLabel.text = "Time Remaining: \(seconds)"
+        
+        //When timer reached 0
+        if milliseconds <= 0 {
+            timer?.invalidate()
+            timerLabel.textColor = UIColor.red
+            
+            //Check if there are any cards unmatched
+            
+        }
+        
     }
     
     // MARK: - UICollectionView Protocol Methods
@@ -105,10 +139,13 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             //Remove the cards from the grid
             cardOneCell!.remove()
             cardTwoCell!.remove()
+            //Check if there are any cards left unmatched
+            checkGameEnded()
         }
         else {
             
             //It's not a match
+            
             
             //Set the statuses of the cards
             cardOne.isFlipped = false
@@ -116,13 +153,61 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             //Flip both cards back
             cardOneCell?.flipBack()
             cardTwoCell?.flipBack()
+            checkGameEnded()
         }
-    
-    
+        
+        
         firstFlippedCardIndex = nil
+        
+        func checkGameEnded() {
+            // Determine if there are any cards unmatched
+            var isWon = true
+            
+            for card in cardArray {
+                
+                if card.isMatched == false {
+                    isWon = false
+                    break
+                }
+            }
+            //Messaging variables
+            var title = ""
+            var message = ""
+            
+            //If not, then user has won, stop the timer
+            if isWon == true {
+                if milliseconds > 0 {
+                    timer?.invalidate()
+                }
+                title = "Congratulations!"
+                message = "You've defused the nuke"
+                
+            }
+            else {
+                if milliseconds > 0 {
+                    return
+                }
+                
+                title = "Game Over"
+                message = "Your friends are died"
+            }
+            
+            
+            //Show won/lost messaging
+            showAlert(title,message)
+        }
+        
+        func showAlert(_ title:String, _ message:String) {
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            let alertAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+            alert.addAction(alertAction)
+            present(alert, animated: true, completion: nil)
+            
+        }
+    }
     
-    
+        
     } // End ViewController Class
+    
+    
 
-
-}
